@@ -10,6 +10,12 @@ from matplotlib.patches import Rectangle
 
 
 
+from shapely import area
+from shapely.geometry import box
+from shapely.ops import unary_union
+
+
+
 # from matplotlib.axes import Axes
 # from support.constants import cr3bp, mu1, mu2, R_earth, R_moon, earth_collision_radius, E0, jacobimin, L2_info, L1_info, U_tilde, BASE_PATH  # type: ignore
 # from support.helpers import earth_crash_vy_branches, generate_x_ranges, crash_surface_vy
@@ -123,8 +129,25 @@ def Rect_Poincare_2D_get_boxes(all_orbits, all_crossings, plot_second_crossings=
 
 
 
+def get_rect_x_and_y_vals(boxes):
+    x_vals = []
+    y_vals = []
+    for box in boxes:
+        x, y = box.get_xy()
+        x_vals.append(x)
+        y_vals.append(y)
+    return np.array(x_vals), np.array(y_vals)
+    
+
+
+
+
+
+
+
+
 #------------------------------------------------------------------------------
-def calculate_mega_box(x_vals, y_vals, square_length):
+def calculate_mega_box(boxes):
        # if len(x_vals) == 0:
        #        return None  # No points, no box
        # x_min = np.min(x_vals) - square_length/2
@@ -133,8 +156,33 @@ def calculate_mega_box(x_vals, y_vals, square_length):
        # y_max = np.max(y_vals) + square_length/2
        # return (x_min, x_max, y_min, y_max)
        
-       if len(x_vals) == 0:
-              return None  # No points, no box
+    if len(boxes) == 0:
+        return None  # No points, no box
+    
+    # x_vals = get_rect_x_and_y_vals(boxes)[0]
+    # y_vals = get_rect_x_and_y_vals(boxes)[1]
+    
+    # # print("X VALS ARE THE FOLLOWING", x_vals)
+    
+    # sorted_x_vals = np.sort(x_vals)
+    # sorted_y_vals = np.sort(y_vals)
+    
+    polys = []
+    for r in boxes:
+        x, y = r.get_xy()
+        w, h = r.get_width(), r.get_height()
+        polys.append(box(x, y, x+w, y+h))
+    
+    # polys.append(box(0, 0, 1, 1))
+    # polys.append(box(0.5, 0.5, 2, 2))
+    # polys.append(box(0, 0.5, 2, 2))
+    # polys.append(box(0.5, 0, 2, 2))
+    
+    union = unary_union(polys)
+    
+    area = union.area
+    print("Total covered area:", area)
+
 
 
 #------------------------------------------------------------------------------

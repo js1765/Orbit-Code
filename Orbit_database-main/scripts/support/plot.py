@@ -504,7 +504,7 @@ def plot_Poincare_2D(all_orbits, all_crossings, families_str,
 
 
 #------------------------------------------------------------------------------
-######I WROTE THIS ONE:
+######Jack, February:
 def plot_Poincare_2D_with_balls(all_orbits, all_crossings, families_str, 
                       earth_crash_x0, earth_crash_vx0, earth_crash_vy0, moon_crash_x0, moon_crash_vx0, moon_crash_vy0, 
                       plot_second_crossings=True, which="vy", radius=0.01):
@@ -634,7 +634,7 @@ def plot_Poincare_2D_with_balls(all_orbits, all_crossings, families_str,
 
 
 #------------------------------------------------------------------------------
-######I WROTE THIS ONE:
+######Jack, 15 February:
 def plot_Poincare_2D_with_boxes(all_orbits, all_crossings, families_str, 
                       earth_crash_x0, earth_crash_vx0, earth_crash_vy0, moon_crash_x0, moon_crash_vx0, moon_crash_vy0, 
                       plot_second_crossings=True, which="vy", square_length=0.01):
@@ -761,7 +761,7 @@ def plot_Poincare_2D_with_boxes(all_orbits, all_crossings, families_str,
 
 
 # #------------------------------------------------------------------------------
-# ######I WROTE THIS ONE:
+# ######Jack, 13 February:
 # def Poincare_2D_get_boxes(all_orbits, all_crossings, families_str, 
 #                       earth_crash_x0, earth_crash_vx0, earth_crash_vy0, moon_crash_x0, moon_crash_vx0, moon_crash_vy0, 
 #                       plot_second_crossings=True, which="vy", square_length=0.01):
@@ -1453,7 +1453,7 @@ def plot_cross_section_x_vy(all_orbits, all_crossings, families_id,
     
 
 #------------------------------------------------------------------------------
-######I WROTE THIS ONE:
+######Jack, 16 February:
 def plot_given_boxes(boxes, earth_crash_x0, earth_crash_vx0, earth_crash_vy0, moon_crash_x0, moon_crash_vx0, moon_crash_vy0, which="vy"):
     
     fig = plt.figure(figsize=(14, 8))

@@ -51,7 +51,7 @@ Notes
 from support.orbit_data import gather_analytic_resonant_with_specified_p_and_x_value, gather_dataset, gather_analytic_resonant
 from support.plot import plot_given_boxes, plot_Poincare_2D_with_boxes, plot_Poincare_2D_with_balls, plot_Poincare_2D, plot_Poincare_3D, plot_Poincare_analytic, plot_cross_section_x_vy, plot_cross_section_x_vy_individual
 
-from support.rectangle_calculations import Rect_Poincare_2D_get_boxes
+from support.rectangle_calculations import Rect_Poincare_2D_get_boxes, calculate_mega_box
 
 
 data = gather_dataset(
@@ -65,18 +65,6 @@ data = gather_dataset(
     load_circular                = False,
 )
 
-# data = gather_dataset(
-#     plot_second_crossings = True,
-#     load_lunar                   = True,
-#     load_prograde_resonant    = True,
-#     load_prograde_resonant_x1    = True,
-#     load_retrograde_resonant     = True,
-#     load_retrograde_resonant_x1  = True,
-#     load_crash                   = True,
-#     load_circular                = True,
-# )
-
-
 
 orbits      = data["orbits"]
 crossings   = data["crossings"]
@@ -88,27 +76,14 @@ moon_crash_x0  = data["moon_crash_x0"]
 moon_crash_vx0  = data["moon_crash_vx0"]
 moon_crash_vy0  = data["moon_crash_vy0"]
 
-# # data_analytic = gather_analytic_resonant(max_p = 9, step_dx = 0.001)
-# data_analytic = gather_analytic_resonant(max_p = 8, step_dx = 0.001)
 
-# data_analytic = gather_analytic_resonant(max_p = 20, step_dx = 0.0000001)
-
-
-
+###Change max_p to get more orbits (up to max_p : 1), change step_dx to get higher resolution (but beware of long runtimes for small step_dx)
 # data_analytic = gather_analytic_resonant(max_p = 8, step_dx = 0.001)
 
 # orbits_analytic      = data_analytic["orbits"]
 # crossings_analytic   = data_analytic["crossings"]
 # families_id_analytic = data_analytic["families_str"]
 
-
-
-# print("AAAAAAAAAAAAAAAAAA",orbits_analytic)
-# print("AAAAAAAAAAAAAAAAAA",crossings_analytic[0][0].size)
-# print("AAAAAAAAAAAAAAAAAA",crossings_analytic)
-
-# crossings_analytic[0][2] = [0]*42
-# print("AAAAAAAAAAAAAAAAAA",crossings_analytic[0][2])
 
 
 # plot_Poincare_2D(orbits, crossings, families_id, 
@@ -141,11 +116,6 @@ orbits_analytic1      = data_analytic1["orbits"]
 crossings_analytic1   = data_analytic1["crossings"]
 families_id_analytic1 = data_analytic1["families_str"]
 
-# print("orbits_analytic (8,0.1):",orbits_analytic1)
-# print("crossings_analytic (8,0.05):",crossings_analytic1)
-# print("families_id_analytic (8,0.05):",families_id_analytic1)
-
-# print("data_analytic1:",data_analytic1)
 
 
 data_analytic2 = gather_analytic_resonant_with_specified_p_and_x_value(max_p = 14, x_value = 0.05)
@@ -154,11 +124,7 @@ orbits_analytic2      = data_analytic2["orbits"]
 crossings_analytic2   = data_analytic2["crossings"]
 families_id_analytic2 = data_analytic2["families_str"]
 
-# print("orbits_analytic (9,0.1):",orbits_analytic2)
-#print("crossings_analytic (8,0.1):",crossings_analytic2)
-# print("families_id_analytic (8,0.1):",families_id_analytic2)
 
-# print("data_analytic2:",data_analytic2)
 
 
 # plot_Poincare_2D_with_balls(orbits_analytic2, crossings_analytic2, families_id_analytic2, 
@@ -167,14 +133,9 @@ families_id_analytic2 = data_analytic2["families_str"]
 
 
 
-# new_merged_orbits = [orbits_analytic1[0],orbits_analytic2[0]]
-# print("NEW MERGED ORBITS:", new_merged_orbits)
-
-
 
 
 #####FROM HERE UNTIL "------------------------------------------", THE FOLLOWING IS ALL ABOUT MY merge_datasets FUNCTION TO GET AND PLOT ORBITS WITH TOTALLY DIFFERENT p AND x VALUES.
-
 
 
 from typing import Dict, List, Tuple, Sequence
@@ -202,8 +163,6 @@ def merge_datasets(dataset1: Dict[str, object], dataset2: Dict[str, object]) -> 
         "moon_crash_vy0": np.array([]),
         "families_str":   merged_families_id,
     }
-    # print(merged)
-    # print("LBHGYFUTDYCFJVHGKJB", np.concatenate([list1[0], list2[0]]))
 
 
 
@@ -219,13 +178,6 @@ merged_data = merge_datasets(data_analytic1, data_analytic2)
 
 
 
-
-
-######  print("MERGED ORBITS MERGED ORBITS MERGED ORBITS:", merge_lists(orbits_analytic1, orbits_analytic2))
-
-
-###### merged_orbits = merge_singleton_datasets(data_analytic1["orbits"], data_analytic2["orbits"])
-###### print("MERGED ORBITS:", merged_orbits)
 
 def merge_lists(list1, list2):
     return list1 + list2
@@ -249,9 +201,6 @@ orbits_analytic3      = data_analytic3["orbits"]
 crossings_analytic3   = data_analytic3["crossings"]
 families_id_analytic3 = data_analytic3["families_str"]
 
-###### print("orbits_analytic3:",orbits_analytic3)
-
-#print("data_analytic3:",data_analytic3)
 
 
 # plot_Poincare_2D(merged_orbits, merged_crossings, merged_families_id, 
@@ -274,14 +223,10 @@ families_id_analytic3 = data_analytic3["families_str"]
 #                  earth_crash_x0, earth_crash_vx0, earth_crash_vy0, moon_crash_x0, moon_crash_vx0, moon_crash_vy0, 
 #                  plot_second_crossings = True, which="vy",square_length=0.04)
 
-# # print("JFGHKLGKFDSTHFJHGKJLKJLKGF", len(merged_orbits))
 
 
-# # for (x_vals, vx_vals, vy_vals, label) in merged_orbits:
-# #     print("NJKHBLJVGCJFHGVKBLN",x_vals.size)
 
-
-data_analytic3 = gather_analytic_resonant(max_p = 9, step_dx = 0.1)
+data_analytic3 = gather_analytic_resonant(max_p = 12, step_dx = 0.1)
 
 orbits_analytic3      = data_analytic3["orbits"]
 crossings_analytic3   = data_analytic3["crossings"]
@@ -293,18 +238,19 @@ families_id_analytic3 = data_analytic3["families_str"]
 #                  plot_second_crossings = True, which="vy",square_length=0.04)
 
 
+merged_orbits = merge_lists(merged_orbits,orbits_analytic3)
+merged_crossings = merge_lists(merged_crossings, crossings_analytic3)
+merged_families_id = merge_lists(merged_families_id, families_id_analytic3)
 
 
-boxes = Rect_Poincare_2D_get_boxes(merged_orbits, merged_crossings, plot_second_crossings = True, which="vy", square_length=0.04)
+boxes = Rect_Poincare_2D_get_boxes(merged_orbits, merged_crossings, plot_second_crossings = True, which="vy", square_length=0.1)
 
 # boxes = Rect_Poincare_2D_get_boxes(orbits_analytic3, crossings_analytic3, plot_second_crossings = True, which="vy", square_length=0.04)
 
-# print("ABVCASFGHJED")
-
-# for box in boxes:
-#         print("BOX IS THE FOLLOWING", box)
 
 plot_given_boxes(boxes, earth_crash_x0, earth_crash_vx0, earth_crash_vy0, moon_crash_x0, moon_crash_vx0, moon_crash_vy0, which="vy")
+
+calculate_mega_box(boxes)
 
 #------------------------------------------------------------------------------------------------------------------------------
 
